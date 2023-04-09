@@ -1,4 +1,8 @@
 <?php
+
+
+
+
     //Base de datos
 
     require '../../includes/config/database.php';
@@ -93,16 +97,16 @@
             /** SUBIDA DE ARCHIVOS */
 
             //Crear carpeta
-            $carpetaImagenes = '../../imagenes';
+            $carpetaImagenes = '../../imagenes/';
             if(!is_dir($carpetaImagenes)){
                 mkdir($carpetaImagenes);
             }
             
             //Generar un nombre unico
-            $nombreImagen = md5(uniqid(rand(), true));
+            $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
             //Subir la imagen 
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/". $nombreImagen . ".jpg" );
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen );
             
 
             //Insertar en la base de datos
