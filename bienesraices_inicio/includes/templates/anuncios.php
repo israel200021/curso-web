@@ -1,35 +1,24 @@
 <?php
-
-    $id = $_GET['id'	];
-    $id = filter_var($id,FILTER_VALIDATE_INT);
-
-    if(!$id) {
-        header('Location: /'); 
-    }
-
     //Importar la conexion
     require 'includes/config/database.php';
     $db = conectarDB();
 
     //consultar
-    $query = "SELECT * FROM propiedades WHERE id=$id";
+    $query = "SELECT * FROM propiedades LIMIT $limite";
 
     //obtener resultado
     $resultado = mysqli_query($db, $query);
-    if(!$resultado->num_rows){
-        header('Location: /');
-    }
-    $propiedad = mysqli_fetch_assoc($resultado);
 
-    require 'includes/funciones.php';
-    incluirTemplate('header');
 ?>
 
-    <main class="contenedor seccion contenido-centrado">
-        <h1><?php echo $propiedad['titulo']; ?></h1>
-        <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="imagen de la propiedad">
 
-        <div class="resumen-propiedad">
+<div class="contenedor-anuncios">
+    <?php while($propiedad = mysqli_fetch_assoc($resultado)): ?>
+    <div class="anuncio">
+        <img src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="anuncio" loading="lazy">
+        <div class="contenido-anuncio">
+            <h3><?php echo $propiedad['nombre']; ?></h3>
+            <p><?php echo $propiedad['descripcion']; ?></p>
             <p class="precio"><?php echo $propiedad['precio']; ?></p>
             <ul class="iconos-caracteristicas">
                 <li>
@@ -48,13 +37,15 @@
                 </li>
             </ul>
 
-            <?php echo $propiedad['descripcion']; ?>
-            
-        </div>
+            <a href="anuncio.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Ver propiedad</a>
+        </div><!--.contenido-anunico-->
+    </div><!--.anuncio-->
+    <?php endwhile; ?>
+</div><!--.contenedor-anunicos-->
 
-    </main>
+
+    <!-- //Cerrar la conexion
 
 <?php
     mysqli_close($db);
-    incluirTemplate('footer');
-?>
+?> -->
