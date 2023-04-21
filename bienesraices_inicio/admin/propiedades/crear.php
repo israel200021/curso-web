@@ -1,5 +1,9 @@
 <?php
-
+    require '../../includes/funciones.php';
+    $auth = estadoAutenticado();
+    if (!$auth){
+        header('Location: /');
+    }   
 
 
 
@@ -128,7 +132,6 @@
     }
 
 
-    require '../../includes/funciones.php';
     incluirTemplate('header');
 ?>
 

@@ -1,10 +1,9 @@
 <?php
-
-    // echo "<pre>";
-    // var_dump($_POST);
-    // echo "</pre>";
-
-
+    require '../includes/funciones.php';
+    $auth = estadoAutenticado();
+    if (!$auth){
+        header('Location: /');
+    }
 
 
     //Importar la conexion
@@ -43,7 +42,7 @@
         }
         }
     }
-    require '../includes/funciones.php';
+
     incluirTemplate('header');
 ?>
 
